@@ -1,16 +1,22 @@
-import urllib
 import urllib.request
 import requests
-    
-def download_img_by_url(url, name):
+ 
+ # function to download an image using it's url.
+ # the name parameter is to name the image    
+def download_images_by_url(url, name):
     try:
         res = requests.get(url, verify = False)
-        if res.status_code == 200:
+        
+        # checking if the code status is OK or failed 
+        if res.status_code == 200: 
+            # to download the image 
             urllib.request.urlretrieve(url,name)
             pass
+        
         else:
             print('Image could not be retrieved')
-                
+    
+    # exceptions         
     except requests.exceptions.ConnectionError as E:
         print(f"Request failed: {E}")
 
@@ -19,15 +25,18 @@ def download_img_by_url(url, name):
           
     except OSError as E:
         print(f"Request failed: {E}")
+
+ # function to download all the images from a file
+def download_images(file_name):
+    # openning the file and reading urls line by line 
+    with open(file_name) as images_file:
         
-# openning the file and reading urls line by line 
-with open('images.txt') as images_file:
-    images_url = images_file.readlines()
+        # to name the images in the loop
+        count = 0
+        
+        # saving the images one by one in this folder 
+        for image_url in images_file : 
+            download_images_by_url(image_url, f'image{str(count)}.jpg')
+            count += 1 
 
-    # to name the images 
-    count = 0
-    # saving the images one by one in this folder 
-    for image_url in images_url : 
-        download_img_by_url(image_url, f'image{str(count)}.jpg')
-        count += 1
-
+download_images('images.txt')
