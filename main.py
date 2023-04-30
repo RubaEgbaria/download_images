@@ -46,17 +46,22 @@ def download_images(file_name):
     # validate the file type - only text files accepted.
     if os.path.splitext(file_name)[1].lower() == ".txt":
         
-        # openning the file and reading urls line by line.
-        with open(file_name) as images_file:
-            
-            # to name the images in the loop.
-            count = 0
-            
-            # saving the images one by one in this folder.
-            for image_url in images_file :         
-                download_image_by_url(image_url, f'image{str(count)}.jpg')
-                count += 1 
+        if os.stat(file_name).st_size != 0 :
+        
+            # openning the file and reading urls line by line.
+            with open(file_name) as images_file:
                 
+                # to name the images in the loop.
+                count = 0
+                
+                # saving the images one by one in this folder.
+                for image_url in images_file :         
+                    download_image_by_url(image_url, f'image{str(count)}.jpg')
+                    count += 1 
+                    
+        else:
+            print(" the file is empty.")
+                    
     else:
         print("File is not a text file")
 
