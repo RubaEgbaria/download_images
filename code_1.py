@@ -3,24 +3,23 @@ import urllib.request
 import requests
     
 def download_img_by_url(url, name):
-    res = requests.get(url, verify = False)
-        
-    if res.status_code == 200:
-        try:
+    try:
+        res = requests.get(url, verify = False)
+        if res.status_code == 200:
             urllib.request.urlretrieve(url,name)
+            pass
+        else:
+            print('Image could not be retrieved')
                 
-        except requests.ConnectionError as E:
-            print(str(E))
+    except requests.exceptions.ConnectionError as E:
+        print(f"Request failed: {E}")
 
-        except requests.RequestException as E:
-            print(str(E))
-            
-        except OSError as E:
-            print(str(E))
-            
-    else:
-        print('Image Could not be retrieved')
-
+    except requests.RequestException as E:
+        print(f"Request failed: {E}")
+          
+    except OSError as E:
+        print(f"Request failed: {E}")
+        
 # openning the file and reading urls line by line 
 with open('images.txt') as images_file:
     images_url = images_file.readlines()
