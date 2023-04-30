@@ -4,7 +4,7 @@ import os
  
  # function to download an image using it's url.
  # the name parameter is to name the image.
-def download_images_by_url(url, name):
+def download_image_by_url(url, name):
     try:
         res = requests.get(url, verify = False)
         
