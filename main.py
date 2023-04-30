@@ -54,7 +54,7 @@ def download_images(file_name):
             
             # saving the images one by one in this folder.
             for image_url in images_file :         
-                download_images_by_url(image_url, f'image{str(count)}.jpg')
+                download_image_by_url(image_url, f'image{str(count)}.jpg')
                 count += 1 
                 
     else:
