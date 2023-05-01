@@ -1,10 +1,13 @@
 import urllib.request
 import requests
 import os
+from datetime import datetime
+
  
  # function to download an image using it's url.
  # the name parameter is to name the image.
 def download_image_by_url(url, name):
+    
     try:
         res = requests.get(url, verify = False)
         
@@ -24,7 +27,7 @@ def download_image_by_url(url, name):
         
         
         else:
-            print('Image could not be retrieved')
+            print('Image could not be retrieved, image status is not OK')
     
     # exceptions         
     except requests.exceptions.ConnectionError as E:
@@ -46,18 +49,22 @@ def download_images(file_name):
     # validate the file type - only text files accepted.
     if os.path.splitext(file_name)[1].lower() == ".txt":
         
+        # checking if the file is empty
         if os.stat(file_name).st_size != 0 :
         
             # openning the file and reading urls line by line.
             with open(file_name) as images_file:
-                
-                # to name the images in the loop.
-                count = 0
-                
+                                
                 # saving the images one by one in this folder.
-                for image_url in images_file :         
-                    download_image_by_url(image_url, f'image{str(count)}.jpg')
-                    count += 1 
+                for image_url in images_file : 
+                    
+                    # using (minutes, seconds, milliseconds) to name the images in the loop.
+                    current_time = datetime.now()
+                    time_str = current_time.strftime("%M%S%M")
+                    
+                    # getting the extention of the image and deleting new lines
+                    ext = os.path.splitext(image_url)[1].strip("\n")        
+                    download_image_by_url(image_url, f'image{str(time_str)}{str(ext)}')
                     
         else:
             print(" the file is empty.")
@@ -65,4 +72,5 @@ def download_images(file_name):
     else:
         print("File is not a text file")
 
+# calling the fuction to test it 
 download_images('images.txt')
