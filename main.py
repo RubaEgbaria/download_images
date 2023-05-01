@@ -9,7 +9,7 @@ from datetime import datetime
 def download_image_by_url(url, name):
     
     try:
-        res = requests.get(url, verify = False)
+        res = requests.get(url, verify = True)
         
         # checking if the code status is OK or failed.
         if res.status_code == 200: 
