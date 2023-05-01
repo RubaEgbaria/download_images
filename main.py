@@ -9,14 +9,14 @@ from datetime import datetime
 def download_image_by_url(url, name):
     
     try:
-        res = requests.get(url, verify = True)
+        URL_result = requests.get(url, verify = True)
         
         # checking if the code status is OK or failed.
-        if res.status_code == 200: 
+        if URL_result.status_code == 200: 
                                 
             # validate the image file type.
-            ext = os.path.splitext(name)[1]
-            if ext.lower() not in ['.jpg', '.jpeg', '.png', '.gif']:
+            extension = os.path.splitext(name)[1]
+            if extension.lower() not in ['.jpg', '.jpeg', '.png', '.gif']:
                 os.remove(name)
                 print(f'{name} deleted : invalid file type.')
                 
@@ -27,7 +27,7 @@ def download_image_by_url(url, name):
         
         
         else:
-            print(f'Image could not be retrieved, image code status: {res.status_code}')
+            print(f'Image could not be retrieved, image code status: {URL_result.status_code}')
     
     # exceptions         
     except requests.exceptions.ConnectionError as E:
@@ -63,9 +63,9 @@ def download_images(file_name):
                     time_str = current_time.strftime('%M%S%M')
                     
                     # getting the extention of the image and deleting new lines
-                    ext = os.path.splitext(image_url)[1].strip('\n')  
+                    extension = os.path.splitext(image_url)[1].strip('\n')  
                           
-                    download_image_by_url(image_url, f'image{str(time_str)}{str(ext)}')
+                    download_image_by_url(image_url, f'image{str(time_str)}{str(extension)}')
                     
         else:
             print('File is empty.')
