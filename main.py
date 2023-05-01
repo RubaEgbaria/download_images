@@ -27,7 +27,7 @@ def download_image_by_url(url, name):
         
         
         else:
-            print('Image could not be retrieved, image status is not OK')
+            print('Image could not be retrieved, image status: ', res.status_code)
     
     # exceptions         
     except requests.exceptions.ConnectionError as E:
